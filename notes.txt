@@ -1,0 +1,35 @@
+retriever techniques
+1-keyword search
+2-word
+3-semantic
+
+keyword search:-
+
+tf-idf
+BM25
+
+BM25 is much better
+
+
+
+from sentence_transformers import SentenceTransformer
+
+# Load the pre-trained sentence transformer model
+model_name =  "BAAI/bge-base-en-v1.5"
+model = SentenceTransformer(os.path.join(os.environ['MODELS'],model_name))
+
+embedding_vectors = joblib.load('embeddings.joblib')
+
+
+reciprocal rank fusion
+
+precision @k
+
+mean reciprocal rank MRR
+
+recall @k (most important)
+
+top 5-20
+
+approximate nearest neighbor ann
+hierarchical navigable small world hnsw 

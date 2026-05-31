@@ -1,0 +1,1 @@
+from .detector_agent import LanguageDetector

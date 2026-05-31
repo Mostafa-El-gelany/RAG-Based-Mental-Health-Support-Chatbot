@@ -1,0 +1,8 @@
+streamlit
+groq
+python-dotenv
+qdrant-client
+sentence-transformers
+joblib
+scikit-learn
+numpy
