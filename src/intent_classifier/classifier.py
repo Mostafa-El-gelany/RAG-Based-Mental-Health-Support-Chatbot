@@ -30,14 +30,22 @@ class IntentClassifier:
 
         self.model_name = WEAK_MODEL
 
-    def predict(self, text: str) -> str:
+    def predict(self, text: str, emotion: str) -> str:
+
         text = text.strip()
         if not text:
             return "out_of_scope"
 
-        prompt = INTENT_PROMPT.format(
-            message=text
-        )
+
+        prompt = f"""
+                    User message:
+                    {text}
+
+                    Detected emotion (from external model):
+                    {emotion}
+
+                    Now classify the user's intent.
+                    """
 
         response = self.client.chat.completions.create(
             model=self.model_name,
@@ -48,12 +56,15 @@ class IntentClassifier:
                     "role": "system",
                     "content": (
                         "You are an intent classifier.\n"
+                        "You are given a user message and an emotion signal.\n\n"
                         "Return ONLY one of:\n"
                         "greeting\n"
                         "goodbye\n"
                         "gratitude\n"
                         "asking_mental_health_question\n"
-                        "out_of_scope"
+                        "out_of_scope\n\n"
+                        "IMPORTANT RULE:\n"
+                        "- Do NOT output explanations\n"
                     )
                 },
                 {
@@ -64,8 +75,7 @@ class IntentClassifier:
         )
 
         raw_response = (
-            response
-            .choices[0]
+            response.choices[0]
             .message
             .content
             .strip()
@@ -77,7 +87,8 @@ class IntentClassifier:
                 return intent
 
         return "out_of_scope"
-
-    def predict_with_metadata(self, text):
-        intent = self.predict(text)
+    
+    
+    def predict_with_metadata(self, text, emotion):
+        intent = self.predict(text, emotion)
         return {"intent": intent}

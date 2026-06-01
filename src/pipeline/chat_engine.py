@@ -2,7 +2,7 @@ from ..llm_service.llm.llm_agents import Agent, QueryRewriter, TranslationAgent
 from ..intent_classifier.classifier import IntentClassifier
 from ..Language_Detection.detector import LanguageDetector
 from ..rag_system.rag.rag_agent import Rag
-
+from ..emotion_classifier.classifier.emotion_classifier_agent import EmotionAgent
 
 class ChatEngine:
     def __init__(self):
@@ -12,11 +12,13 @@ class ChatEngine:
         self.rewriter = QueryRewriter()
         self.classifier = IntentClassifier()
         self.language_detector = LanguageDetector()
+        self.emotion_agent = EmotionAgent()
 
     def process_message(self, user_message: str, top_k: int = 3):
         detected_language = self.language_detector.predict(user_message)
         translated_prompt = self.translation_agent.to_english(user_message, detected_language)
-        intent = self.classifier.predict(translated_prompt)
+        emotion = self.emotion_agent.predict(translated_prompt)
+        intent = self.classifier.predict(translated_prompt, emotion)
 
         rewritten_query = translated_prompt
         results = []
@@ -39,4 +41,5 @@ class ChatEngine:
             "rewritten_query": rewritten_query,
             "results": results,
             "assistant_response": assistant_response,
+            "emotion": emotion
         }

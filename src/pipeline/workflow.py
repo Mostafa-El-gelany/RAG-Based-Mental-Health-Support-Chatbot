@@ -7,6 +7,7 @@ def run():
         user_prompt = input("Enter your message\n")
         result = engine.process_message(user_prompt)
         print(f"Detected Language: {result['detected_language']}\n")
+        print(f"Detected Emotion: {result['emotion']}\n")
         print(f"Identified Intent: {result['intent']}\n")
         print(f"Translated Prompt: {result['translated_prompt']}\n")
 
