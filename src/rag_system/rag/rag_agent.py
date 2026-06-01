@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from dotenv import load_dotenv
 load_dotenv()
+
 class Rag:
     def __init__(self):
         self.embedding_model = SentenceTransformer(
@@ -13,6 +14,7 @@ class Rag:
             url=os.getenv("QDRANT_CLUSTER_ENDPOINT"),
             api_key=os.getenv("QDRANT_API_KEY")
         )
+        return
 
 
     def search_top_k(self, user_prompt, top_k=5):
@@ -27,4 +29,5 @@ class Rag:
             with_payload=True  # Ensure we fetch the context, response, and chunk
         ).points
         
+        #return search_results
         return search_results

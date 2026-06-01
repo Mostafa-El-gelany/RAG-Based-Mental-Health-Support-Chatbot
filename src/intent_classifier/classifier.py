@@ -28,7 +28,7 @@ class IntentClassifier:
             api_key=os.getenv('LLM_API_KEY')
         )
 
-        self.model_name = WEAK_MODEL
+        self.model_name = STRONG_MODEL
 
     def predict(self, text: str, emotion: str) -> str:
 

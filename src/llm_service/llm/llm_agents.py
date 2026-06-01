@@ -11,7 +11,7 @@ class Agent:
             api_key=os.getenv("LLM_API_KEY")
         )
 
-        self.model = WEAK_MODEL
+        self.model = STRONG_MODEL
 
         self.messages = [
             {
@@ -131,7 +131,7 @@ class QueryRewriter:
             api_key=os.getenv("LLM_API_KEY")
         )
 
-        self.model = WEAK_MODEL
+        self.model = STRONG_MODEL
 
     def rewrite(self, user_query: str, chat_history: str = "", language: str = "") -> str:
 
@@ -206,7 +206,7 @@ class TranslationAgent:
         self.client = Groq(
             api_key=os.getenv("LLM_API_KEY")
         )
-        self.model = WEAK_MODEL
+        self.model = STRONG_MODEL
 
     def _call_llm(self, prompt: str) -> str:
         response = self.client.chat.completions.create(
