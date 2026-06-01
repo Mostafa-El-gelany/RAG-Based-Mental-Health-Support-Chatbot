@@ -20,7 +20,7 @@ class ChatEngine:
         if 'en' in dict(detected_language):
             detected_language = 'en'
         else:
-            detected_language = detected_language[0]
+            detected_language = detected_language[0][0]
         translated_prompt = self.translation_agent.to_english(user_message, detected_language)
         emotion = self.emotion_agent.predict(translated_prompt)
         intent = self.classifier.predict(translated_prompt, emotion)
